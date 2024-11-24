@@ -1,0 +1,46 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+logs/*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Environment Variables
+.env*
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor Settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+
+# Build files
+build/
+dist/
+
+# Coverage files
+coverage/
+
+# Others
+*.zip
+*.tar.gz
+*.tgz
