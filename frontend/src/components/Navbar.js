@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "./UserContext";
 
 const Navbar = ({ handleLogout, setShowModal }) => {
@@ -19,16 +19,19 @@ const Navbar = ({ handleLogout, setShowModal }) => {
 
   return (
     <header className="flex justify-between items-center bg-lightPurple p-4 rounded-md shadow-md mb-6">
-      <h1 className="text-3xl font-semibold text-white">Library</h1>
+      <Link to="/allbooks">
+        <h1 className="text-3xl font-semibold text-white">Library</h1>
+      </Link>
       <nav className="flex items-center space-x-4">
-        {user?.userInfo?.role === "admin" && window.location.pathname === "/allbooks" && (
-          <button
-            className="bg-palePurple text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"
-            onClick={() => setShowModal(true)} 
-          >
-            Add Book
-          </button>
-        )}
+        {user?.userInfo?.role === "admin" &&
+          window.location.pathname === "/allbooks" && (
+            <button
+              className="bg-palePurple text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"
+              onClick={() => setShowModal(true)}
+            >
+              Add Book
+            </button>
+          )}
 
         {user?.userInfo?.role === "user" &&
           window.location.pathname === "/allbooks" && (
