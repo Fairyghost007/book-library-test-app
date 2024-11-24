@@ -131,12 +131,12 @@ const AllBooksPage = () => {
   };
 
   return (
-    <div className={`container mx-auto p-6  ${currentBooks.length<=3 ? "h-screen lg:h-screen md:h-screen" : "h-full lg:h-full md:h-full"}`}>
+    <div className={`container mx-auto p-6  ${currentBooks.length<=3 ? "h-screen md:h-screen lg:h-screen" : "h-full lg:h-full md:h-full"}`}>
 
       <Navbar handleLogout={handleLogout} setShowModal={setShowModal} />
       <main>
         {/* <div className=" bg-green-500 p-4 rounded-lg text-white">${books.length} ${totalPages} ${currentBooks.length}</div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {currentBooks.map((book) => (
             <Book
               key={book._id}
@@ -152,7 +152,7 @@ const AllBooksPage = () => {
         </div>
 
         {totalPages > 1 && (
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center items-center mt-8 space-x-2">
             <button
               className="px-6 py-2 bg-gray-400 text-white rounded-md mr-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
               disabled={currentPage === 1}
@@ -161,7 +161,7 @@ const AllBooksPage = () => {
               Previous
             </button>
 
-            <div className="flex items-center">
+            {/* <div className="flex items-center"> */}
               {[...Array(totalPages)].map((_, index) => (
                 <button
                   key={index}
@@ -171,7 +171,7 @@ const AllBooksPage = () => {
                   {index + 1}
                 </button>
               ))}
-            </div>
+            {/* </div> */}
 
             <button
               className="px-6 py-2 bg-gray-400 text-white rounded-md ml-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
