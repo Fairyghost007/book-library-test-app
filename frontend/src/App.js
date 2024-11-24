@@ -14,7 +14,7 @@ function App() {
     <div className="App bg-darkPurple">
       <UserProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<AllBooksPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/allbooks" element={<AllBooksPage />} />
