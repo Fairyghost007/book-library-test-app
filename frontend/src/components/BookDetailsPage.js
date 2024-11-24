@@ -15,7 +15,7 @@ const BookDetailsPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/books/${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/books/${id}`)
       .then((response) => {
         setBook(response.data);
       })
