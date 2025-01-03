@@ -27,6 +27,7 @@ const AllBooksPage = () => {
       } catch (error) {
         console.error("Error fetching books:", error);
       }
+      setLoading(false);
     };
 
     const fetchFavorites = async () => {
@@ -58,7 +59,6 @@ const AllBooksPage = () => {
     initializeUser();
     fetchBooks();
     fetchFavorites();
-    setLoading(false);
   }, [user, login]);
 
   const toggleFavorite = async (bookId) => {
@@ -116,8 +116,6 @@ const AllBooksPage = () => {
     navigate("/allbooks");
   };
 
-  if (loading) return <p>Loading...</p>;
-
   const totalPages = Math.ceil(books.length / booksPerPage);
   const currentBooks = books.slice(
     (currentPage - 1) * booksPerPage,
@@ -131,37 +129,44 @@ const AllBooksPage = () => {
   };
 
   return (
-    <div className={`container mx-auto p-6  ${currentBooks.length<=3 ? "h-screen md:h-screen lg:h-screen" : "h-full lg:h-full md:h-full"}`}>
-
+    <div className={`container mx-auto p-6 ${currentBooks.length <= 3 ? "h-screen md:h-screen lg:h-screen" : "h-full lg:h-full md:h-full"}`}>
       <Navbar handleLogout={handleLogout} setShowModal={setShowModal} />
-      <main>
-        {/* <div className=" bg-green-500 p-4 rounded-lg text-white">${books.length} ${totalPages} ${currentBooks.length}</div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
-          {currentBooks.map((book) => (
-            <Book
-              key={book._id}
-              book={book}
-              isFavorite={favorites.includes(book._id.toString())}
-              onFavoriteToggle={toggleFavorite}
-              userRole={user?.userInfo?.role}
-              userId={user?.userInfo?.id}
-              onDelete={handleDeleteBook}
-              onEdit={handleEditBook}
-            />
-          ))}
+      
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-row gap-2">
+            <div className="w-4 h-4 rounded-full bg-darkRose animate-bounce"></div>
+            <div className="w-4 h-4 rounded-full bg-darkRose animate-bounce [animation-delay:-.3s]"></div>
+            <div className="w-4 h-4 rounded-full bg-darkRose animate-bounce [animation-delay:-.5s]"></div>
+          </div>
         </div>
+      ) : (
+        <main>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentBooks.map((book) => (
+              <Book
+                key={book._id}
+                book={book}
+                isFavorite={favorites.includes(book._id.toString())}
+                onFavoriteToggle={toggleFavorite}
+                userRole={user?.userInfo?.role}
+                userId={user?.userInfo?.id}
+                onDelete={handleDeleteBook}
+                onEdit={handleEditBook}
+              />
+            ))}
+          </div>
 
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center mt-8 space-x-2">
-            <button
-              className="px-6 py-2 bg-gray-400 text-white rounded-md mr-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              Previous
-            </button>
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center mt-8 space-x-2">
+              <button
+                className="px-6 py-2 bg-gray-400 text-white rounded-md mr-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
 
-            {/* <div className="flex items-center"> */}
               {[...Array(totalPages)].map((_, index) => (
                 <button
                   key={index}
@@ -171,18 +176,18 @@ const AllBooksPage = () => {
                   {index + 1}
                 </button>
               ))}
-            {/* </div> */}
 
-            <button
-              className="px-6 py-2 bg-gray-400 text-white rounded-md ml-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
-              disabled={currentPage === totalPages}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </main>
+              <button
+                className="px-6 py-2 bg-gray-400 text-white rounded-md ml-4 disabled:bg-gray-300 hover:bg-gray-500 transition duration-300"
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </main>
+      )}
 
       {showModal && (
         <AddBook
