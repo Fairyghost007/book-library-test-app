@@ -2,6 +2,9 @@
 # Book Library App
 
 A full-stack web application for managing a book library. Built with the **MERN stack** and styled using **Tailwind CSS**.
+# Can test with:
+- user1, passer123
+- admin1, passer123
 
 ## Features
 
