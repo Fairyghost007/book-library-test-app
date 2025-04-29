@@ -1,10 +1,15 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link,useLocation } from "react-router-dom";
 import { useUser } from "./UserContext";
 
 const Navbar = ({ handleLogout, setShowModal }) => {
-  const { user } = useUser();
+  const location = useLocation();
+
   const navigate = useNavigate();
+  const { user,loading } = useUser();
+  if (loading) return null;
+  // console.log("🔍 User in Navbar:", user);
+ 
 
   const navigateToFavorites = () => {
     navigate("/favorites");
@@ -24,7 +29,8 @@ const Navbar = ({ handleLogout, setShowModal }) => {
       </Link>
       <nav className="flex items-center space-x-4">
         {user?.userInfo?.role === "admin" &&
-          window.location.pathname === "/allbooks" && (
+          location.pathname === "/allbooks"
+          && (
             <button
               className="bg-palePurple text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"
               onClick={() => setShowModal(true)}
@@ -32,9 +38,10 @@ const Navbar = ({ handleLogout, setShowModal }) => {
               Add Book
             </button>
           )}
-
         {user?.userInfo?.role === "user" &&
-          window.location.pathname === "/allbooks" && (
+          location.pathname === "/allbooks"
+          && (
+            
             <button
               className="bg-purplle text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"
               onClick={navigateToFavorites}
@@ -43,7 +50,8 @@ const Navbar = ({ handleLogout, setShowModal }) => {
             </button>
           )}
         {user?.userInfo?.role === "user" &&
-          window.location.pathname === "/favorites" && (
+          location.pathname === "/favorites"
+          && (
             <button
               className="bg-purplle text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"
               onClick={() => navigate("/allbooks")}
@@ -51,7 +59,8 @@ const Navbar = ({ handleLogout, setShowModal }) => {
               Return to All Books
             </button>
           )}
-        {window.location.pathname.includes("/detail") && (
+        {location.pathname === "/details/:id"
+ && (
           <button
             onClick={() => navigate(-1)}
             className="bg-purplle text-white px-6 py-2 rounded-md hover:bg-darkRose transition duration-300"

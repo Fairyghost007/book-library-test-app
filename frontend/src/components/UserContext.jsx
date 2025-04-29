@@ -6,12 +6,14 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
       setUser(storedUser);
     }
+    setLoading(false);
   }, []);
 
   const login = (userData) => {
@@ -20,13 +22,13 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null); 
-    localStorage.removeItem("user"); 
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
-      {children}
+    <UserContext.Provider value={{ user, login, logout, loading }}>
+      {!loading && children}
     </UserContext.Provider>
   );
 };
